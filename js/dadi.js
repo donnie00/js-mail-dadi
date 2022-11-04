@@ -22,8 +22,16 @@ playBtnEl.addEventListener('click', function () {
 	const firstNumber = Math.floor(Math.random() * (7 - 1) + 1);
 	const secondNumber = Math.floor(Math.random() * (7 - 1) + 1);
 
-	playerOneNumber.classList.remove('text-primary');
-	playerTwoNumber.classList.remove('text-primary');
+	playerOneNumber.classList.remove(
+		'text-primary',
+		'text-success',
+		'text-warning'
+	);
+	playerTwoNumber.classList.remove(
+		'text-primary',
+		'text-success',
+		'text-warning'
+	);
 
 	firstDice.src = `dice-img/${firstNumber}-dice.png`;
 	secondDice.src = `dice-img/${secondNumber}-dice.png`;
@@ -32,17 +40,20 @@ playBtnEl.addEventListener('click', function () {
 		console.log('Vince 1');
 
 		playerOneNumber.classList.add('text-success');
-		playerTwoNumber.classList.remove('text-success');
 
 		playerOneScore += 1;
 	} else if (firstNumber < secondNumber) {
 		console.log('Vince 2');
 
 		playerTwoNumber.classList.add('text-success');
-		playerOneNumber.classList.remove('text-success');
 
 		playerTwoScore += 1;
-	} else console.log('Draw');
+	} else {
+		console.log('Draw');
+
+		playerOneNumber.classList.add('text-warning');
+		playerTwoNumber.classList.add('text-warning');
+	}
 
 	playBtnEl.innerText = 'Replay';
 	playerOneNumber.innerText = firstNumber;
@@ -51,20 +62,25 @@ playBtnEl.addEventListener('click', function () {
 	playerTwoNumber.innerText = secondNumber;
 	playerTwoScoreEl.innerText = playerTwoScore;
 
+	playerOneScoreEl.classList.remove(
+		'table-success',
+		'table-danger',
+		'table-warning'
+	);
+	playerTwoScoreEl.classList.remove(
+		'table-success',
+		'table-danger',
+		'table-warning'
+	);
+
 	if (playerOneScore > playerTwoScore) {
 		playerOneScoreEl.classList.add('table-success');
-		playerOneScoreEl.classList.remove('table-danger');
-
 		playerTwoScoreEl.classList.add('table-danger');
-		playerTwoScoreEl.classList.remove('table-success');
 	} else if (playerOneScore < playerTwoScore) {
-		playerOneScoreEl.classList.remove('table-success');
 		playerOneScoreEl.classList.add('table-danger');
-
 		playerTwoScoreEl.classList.add('table-success');
-		playerTwoScoreEl.classList.remove('table-danger');
 	} else {
-		playerOneScoreEl.className = '';
-		playerTwoScoreEl.className = '';
+		playerOneScoreEl.classList.add('table-warning');
+		playerTwoScoreEl.classList.add('table-warning');
 	}
 });
